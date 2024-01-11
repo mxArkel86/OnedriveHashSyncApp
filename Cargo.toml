@@ -1,0 +1,25 @@
+[package]
+name = "SyncApp"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix = "0.13.1"
+actix-files = { version = "0.6.2", features = ["actix-server"] }
+actix-web = "4.4.0"
+async-std = { version = "1.12.0", features = ["attributes"] }
+chrono = "0.4.31"
+crypto = { version = "0.5.1", features = ["digest", "universal-hash", "std", "cipher", "signature", "aead", "getrandom", "rand_core", "password-hash", "elliptic-curve"] }
+futures = "0.3.29"
+json = "0.12.4"
+lazy_static = "1.4.0"
+min-max = "0.1.8"
+once_cell = "1.19.0"
+reqwest = { version = "0.11.22", features = ["blocking"] }
+serde = { version = "1.0.193", features = ["derive"] }
+serde_json = "1.0.108"
+sha1 = "0.10.6"
+tokio = { version = "1.35.0", features = ["full"] }
+webbrowser = "0.8.12"

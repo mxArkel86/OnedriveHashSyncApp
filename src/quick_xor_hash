@@ -1,0 +1,136 @@
+// use std::{fs::File, io::Read};
+
+// const SIZE:usize = 20;
+
+// fn zero()->[u8;SIZE]{
+//     return [0u8;SIZE];
+// }
+
+// fn reverse(a:[u8;SIZE])->[u8;SIZE]{
+//     let mut b = a.clone();
+//     b.reverse();
+//     b
+// }
+
+// fn extend8(a:u8)->[u8;SIZE]{
+//     let mut b = zero();
+//     b[SIZE-1] = a;
+//     return b;
+// }
+
+// fn extend64(a:[u8;8])->[u8;SIZE]{
+//     let mut b = zero();
+//     for i in 0..7{
+//         b[SIZE-i-1] = a[7-i];
+//     }
+//     b
+// }
+
+// fn u8_array_to_bits(arr: [u8; SIZE]) -> Vec<bool> {
+//     let mut result = Vec::new();
+
+//     for &byte in arr.iter() {
+//         for i in (0..8).rev() {
+//             result.push((byte >> i) & 1 == 1);
+//         }
+//     }
+
+//     result
+// }
+
+// fn bits_to_u8_array(bits: &[bool]) -> [u8; SIZE] {
+//     let mut result = [0u8; SIZE];
+//     let mut bit_index = 0;
+
+//     for i in 0..SIZE {
+//         for j in (0..8).rev() {
+//             if bit_index < bits.len() {
+//                 if bits[bit_index] {
+//                     result[i] |= 1 << j;
+//                 }
+//                 bit_index += 1;
+//             }
+//         }
+//     }
+
+//     result
+// }
+
+// fn rotate(a: [u8; SIZE], n: usize) -> [u8; SIZE] {
+//     let bits = u8_array_to_bits(a);
+//     let rotated_bits = rotate_bits(&bits, n);
+//     bits_to_u8_array(&rotated_bits)
+// }
+
+// fn rotate_bits(bits: &[bool], n: usize) -> Vec<bool> {
+//     let mut rotated = bits.to_vec();
+//     let length = bits.len();
+
+//     for _ in 0..n {
+//         let bit = rotated.remove(0);
+//         rotated.push(bit);
+//     }
+
+//     rotated.truncate(length); // Maintain the original length after rotation
+//     rotated
+// }
+
+// fn xor(a:[u8;SIZE], b:[u8;SIZE])->[u8;SIZE]{
+//     let mut result = zero();
+
+//     for i in 0..SIZE {
+//         result[i] = a[i] ^ b[i];
+//     }
+
+//     result
+// }
+
+// fn XorHash0(rgb:Vec<u8>)->[u8;SIZE]{
+//     let mut ret = zero();
+//     for i in 0..rgb.len(){
+//         ret = xor(ret, rotate(extend8(rgb[i]), i*11));
+//     }
+//     return reverse(ret);
+// }
+
+// fn usize_to_u8_set(a:usize)->[u8;8]{
+//     let mut result = [0u8; 8];
+
+//     for i in 0..7 {
+//         if i * 8 < std::mem::size_of::<usize>() * 8 {
+//             result[i] = ((a >> (i * 8)) & 0xFF) as u8;
+//         } else {
+//             result[i] = 0; // Handle overflow by setting to 0 or handle as needed
+//         }
+//     }
+
+//     result
+// }
+
+// fn perform_xor_hash(rgb:Vec<u8>)->[u8;SIZE]{
+//     let size :[u8;8] = usize_to_u8_set(rgb.len());
+//     return xor(extend64(size), XorHash0(rgb));
+// }
+
+// pub fn perform_xor_hash_on_file(file:&str)->[u8;SIZE]{
+//     let mut file = File::open(file).unwrap();
+//     let mut rgb = Vec::new();
+//     file.read_to_end(&mut rgb).unwrap();
+
+//     let mut ret = zero();
+//     let mut start_index = 0;
+
+//     while start_index < rgb.len() {
+//         let end_index = (start_index + SIZE).min(rgb.len());
+//         let chunk = &rgb[start_index..end_index];
+
+//         ret = xor(ret, rotate(extend8(chunk[0]), start_index * 11)); // Example operation
+
+//         start_index += SIZE;
+//     }
+//     let x = reverse(ret);
+//     let size :[u8;8] = usize_to_u8_set(rgb.len());
+
+//     return xor(extend64(size), x);
+
+// }

@@ -1,0 +1,7 @@
+target/
+log.txt
+syncapp.cfg
+local_hashes.json
+remote_hashes.json
+.DS_Store
+Cargo.lock
